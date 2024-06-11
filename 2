@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+// Function to perform monoalphabetic substitution encryption
+void encrypt(char *message, char *key) {
+    int i;
+    char ch;
+    
+    for(i = 0; message[i] != '\0'; ++i) {
+        ch = message[i];
+        
+        // Encrypt only alphabetic characters
+        if(isalpha(ch)) {
+            if(islower(ch)) {
+                message[i] = key[ch - 'a'];
+            }
+            else if(isupper(ch)) {
+                message[i] = toupper(key[ch - 'A']);
+            }
+        }
+    }
+    
+    printf("Encrypted message: %s\n", message);
+}
+
+// Function to perform monoalphabetic substitution decryption
+void decrypt(char *message, char *key) {
+    int i;
+    char ch;
+    
+    for(i = 0; message[i] != '\0'; ++i) {
+        ch = message[i];
+        
+        // Decrypt only alphabetic characters
+        if(isalpha(ch)) {
+            if(islower(ch)) {
+                message[i] = 'a' + (strchr(key, ch) - key);
+            }
+            else if(isupper(ch)) {
+                message[i] = 'A' + (strchr(key, tolower(ch)) - key);
+            }
+        }
+    }
+    
+    printf("Decrypted message: %s\n", message);
+}
+
+int main() {
+    char message[100];
+    char key[26];
+    int choice;
+    
+    printf("Enter a message to encrypt: ");
+    fgets(message, sizeof(message), stdin);
+    
+    printf("Enter the encryption key (26 unique alphabetic characters): ");
+    fgets(key, sizeof(key), stdin);
+    
+    printf("Choose operation:\n");
+    printf("1. Encrypt\n");
+    printf("2. Decrypt\n");
+    scanf("%d", &choice);
+    
+    switch(choice) {
+        case 1:
+            encrypt(message, key);
+            break;
+        case 2:
+            decrypt(message, key);
+            break;
+        default:
+            printf("Invalid choice!\n");
+    }
+    
+    return 0;
+}
