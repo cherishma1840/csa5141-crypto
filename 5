@@ -1,0 +1,26 @@
+#include<stdio.h>
+#include<ctype>
+void ceasar_cipher(char*text,int shift)
+{
+	char ch;
+	int i=0;
+	while(text[i]!='\0')
+	
+	{
+		ch=text[i];
+		if(isalpha(ch)){
+			if(islower(ch))
+			{
+				ch=((ch-'a'+shift)%26)+'a';
+				
+			}else if(isupper(ch))
+			{
+			    ch=((ch-'A'+shift)%26)+'A';
+					
+			}
+			
+		}
+		text[i]=ch;
+		i++;
+	}
+}
